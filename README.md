@@ -15,9 +15,9 @@ This is a blog website built with Python and Django. It includes user login func
 4. Then activate the virtual Environment using: venv/scripts/activate 
 5. Install the requirements: `pip install -r requirements.txt` 
 
-##Next step is importatnt todo for the project to run properly
+## Next step is importatnt todo for the project to run properly
 
-##Next step is importatnt todo for the project to run properly
+## Next step is importatnt todo for the project to run properly
 
 6. Then we need to create localhost key and certificate to run the project in HTTPS://
     for that follow the below steps:
