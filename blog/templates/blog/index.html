@@ -1,0 +1,78 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+	<div class="row">
+		<div class="col-md-6 col-12 mx-md-auto mx-2 mt-md-auto mb-3">
+			<h1 class="fw-bolder">Developer's Blog</h1>
+			<h5 class="text">A blog about Python Django and Web Development</h5>
+		</div>
+	</div>
+
+	{% for object in object_list %}
+	<div class="row">
+		<div class="col-md-6 col-11 mx-md-auto mx-3 mt-5 mb-5">
+			<h3 class="fw-bold content-toggle">
+				{{ object.title }}
+			</h3>
+				<div>
+					<img src="{% static object.image.url %}" alt="Blog_image" height="300px" width="300px" data-article-id="{{ object.id }}" class="image-toggle"/>
+				</div>
+			<p class="text">{{ object.date }}</p>
+			<p class="text">Posted by {{ object.author.username }}</p>
+			{% if object.likes.count == 1 %}
+				<p class="text">{{ object.likes.count }} person likes this post</p>
+			{% else %}
+				<p class="text">{{ object.likes.count }} people like this post</p>
+			{% endif %}
+
+			<div class="my-3 content-details" style="display: none;">
+				{{ object.content|safe }}
+			</div>
+
+			<a href="{% url 'detail_article' object.id %}">Read more</a>
+		</div>
+	</div>
+	{% endfor %}
+
+	<nav>
+		<ul class="pagination">
+			<div class="mx-auto d-flex flex-row mt-5">
+				{% if page_obj.has_previous %}
+					<li class="page-item">
+						<a class="page-link" href="?page=1">&laquo; First</a>
+					</li>
+
+					<li class="page-item">
+						<a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+					</li>
+				{% endif %}
+
+				<li class="page-item">
+					<a class="page-link" href="#">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</a>
+				</li>
+
+				{% if page_obj.has_next %}
+					<li class="page-item">
+						<a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+					</li>
+					<li class="page-item">
+						<a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+					</li>
+				{% endif %}
+			</div>
+		</ul>
+	</nav>
+
+	<script>
+	document.addEventListener("DOMContentLoaded", function() {
+	    const contentToggle = document.querySelectorAll(".content-toggle");
+	    const contentDetails = document.querySelectorAll(".content-details");
+
+	    contentToggle.forEach((title, index) => {
+	        title.addEventListener("click", () => {
+	            contentDetails[index].style.display = contentDetails[index].style.display === "none" ? "block" : "none";
+	        });
+	    });
+	});
+	</script>
+{% endblock content %}
